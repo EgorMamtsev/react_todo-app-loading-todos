@@ -1,30 +1,46 @@
 import React, { useState } from 'react';
 
 type Props = {
-  onAdd: (title: string) => void;
+  onAdd: (title: string) => Promise<unknown> | void;
+  allCompleted: boolean;
+  onToggleAll: () => void;
+  isAdding?: boolean;
 };
 
-export const Header: React.FC<Props> = ({ onAdd }) => {
+export const Header: React.FC<Props> = ({
+  onAdd,
+  allCompleted,
+  onToggleAll,
+  isAdding = false,
+}) => {
   const [todo, setTodo] = useState('');
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (todo.trim()) {
-      onAdd(todo);
+    if (!todo.trim()) {
+      return;
+    }
+
+    const p = onAdd(todo);
+
+    if (p && typeof (p as Promise<unknown>).then === 'function') {
+      (p as Promise<unknown>).then(() => setTodo('')).catch(() => {});
+    } else {
       setTodo('');
     }
   };
 
   return (
     <header className="todoapp__header">
-      {/* this button should have `active` class only if all todos are completed */}
       <button
         type="button"
-        className="todoapp__toggle-all active"
+        className={`todoapp__toggle-all ${allCompleted ? 'active' : ''}`}
         data-cy="ToggleAllButton"
+        onClick={onToggleAll}
+        aria-label="Toggle all todos"
+        disabled={isAdding}
       />
 
-      {/* Add a todo on form submit */}
       <form onSubmit={onSubmit}>
         <input
           data-cy="NewTodoField"
@@ -32,9 +48,8 @@ export const Header: React.FC<Props> = ({ onAdd }) => {
           className="todoapp__new-todo"
           placeholder="What needs to be done?"
           value={todo}
-          onChange={event => {
-            setTodo(event.target.value);
-          }}
+          onChange={event => setTodo(event.target.value)}
+          disabled={isAdding}
         />
       </form>
     </header>
