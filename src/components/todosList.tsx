@@ -5,6 +5,6 @@ type Props = {
   todos: Todo[];
 };
 
-export const TodosList: React.FC<Props> = ({ todos }) => {
-  return ();
+export const TodosList: React.FC<Props> = () => {
+  return null;
 };

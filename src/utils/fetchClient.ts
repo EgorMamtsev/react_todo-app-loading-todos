@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const BASE_URL = 'https://mate.academy/students-api';
 
-// returns a promise resolved after a given delay
+// Повертає проміс, який виконується після заданої затримки (ms).
+// Використовується для штучної паузи у запитах, потрібної для стабільності тестів.
 function wait(delay: number) {
   return new Promise(resolve => {
     setTimeout(resolve, delay);
@@ -11,6 +12,7 @@ function wait(delay: number) {
 // To have autocompletion and avoid mistypes
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
+// Загальний HTTP-запит з JSON-тілом. Повертає десеріалізований JSON або кидає помилку при невдалому статусі.
 function request<T>(
   url: string,
   method: RequestMethod = 'GET',
@@ -26,7 +28,7 @@ function request<T>(
     };
   }
 
-  // DON'T change the delay it is required for tests
+  // НЕ змінювати затримку — вона потрібна для тестів
   return wait(100)
     .then(() => fetch(BASE_URL + url, options))
     .then(response => {
@@ -38,6 +40,7 @@ function request<T>(
     });
 }
 
+// Невелика обгортка зручних методів для звернення до API
 export const client = {
   get: <T>(url: string) => request<T>(url),
   post: <T>(url: string, data: any) => request<T>(url, 'POST', data),
