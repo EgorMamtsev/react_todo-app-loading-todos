@@ -13,6 +13,29 @@ export const FormFooter = ({
   hasCompleted: boolean;
   onClearCompleted: () => Promise<void> | void;
 }) => {
+  const filters = [
+    { value: 'all', label: 'All', cy: 'FilterLinkAll' },
+    { value: 'active', label: 'Active', cy: 'FilterLinkActive' },
+    { value: 'completed', label: 'Completed', cy: 'FilterLinkCompleted' },
+  ];
+
+  {
+    filters.map(f => (
+      <a
+        key={f.value}
+        href={`#/ ${f.value}`}
+        className={`filter__link ${f.value === filter ? 'selected' : ''}`}
+        data-cy={f.cy}
+        onClick={e => {
+          e.preventDefault();
+          onFilterChange(f.value as 'all' | 'active' | 'completed');
+        }}
+      >
+        {f.label}
+      </a>
+    ));
+  }
+
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">

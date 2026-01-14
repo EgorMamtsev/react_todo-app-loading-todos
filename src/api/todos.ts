@@ -23,3 +23,10 @@ export const deleteTodo = (id: number) => {
 export const updateTodo = (id: number, data: Partial<Todo>) => {
   return client.patch<Todo>(`/todos/${id}`, data);
 };
+
+export enum ErrorMessages {
+  ADD_TODO = 'Unable to add a todo',
+  DELETE_TODO = 'Unable to delete a todo',
+  UPDATE_TODO = 'Unable to update a todo',
+  LOAD_TODOS = 'Unable to load todos',
+}
