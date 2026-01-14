@@ -1,5 +1,3 @@
-// Футер зі статистикою та фільтрами.
-// Показує кількість незавершених задач, посилання фільтрів і кнопку очистити виконані.
 export const FormFooter = ({
   remainingCount,
   filter,
@@ -42,7 +40,6 @@ export const FormFooter = ({
         {remainingCount} items left
       </span>
 
-      {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
         <a
           href="#/"
@@ -81,7 +78,6 @@ export const FormFooter = ({
         </a>
       </nav>
 
-      {/* this button should be disabled if there are no completed todos */}
       <button
         type="button"
         className="todoapp__clear-completed"

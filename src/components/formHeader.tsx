@@ -10,8 +10,6 @@ type Props = {
   showToggleAll?: boolean;
 };
 
-// Хедер додавання нового todo. Містить поле вводу та кнопку "toggle all".
-// `onAdd` повертає проміс або виконується синхронно; компонент обробляє фокус і очищення поля.
 export const Header: React.FC<Props> = ({
   onAdd,
   allCompleted,
@@ -30,8 +28,6 @@ export const Header: React.FC<Props> = ({
     });
   }, [registerFocus]);
 
-  // Обробник сабміту форми додавання нового todo.
-  // Обрізає пробіли, валідує порожній текст, викликає `onAdd` і керує фокусом після завершення.
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const trimmed = todo.trim();

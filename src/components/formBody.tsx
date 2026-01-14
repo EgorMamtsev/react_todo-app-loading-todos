@@ -10,8 +10,6 @@ type Props = {
   loadingId: number | null;
 };
 
-// Тіло форми — рендерить список `TodoItem`.
-// Використовує `todo.clientId ?? todo.id` як ключ, щоб зберегти стабільність DOM під час оптимістичних операцій.
 export const FormBody: React.FC<Props> = ({
   todos,
   onDelete,

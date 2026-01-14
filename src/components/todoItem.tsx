@@ -10,8 +10,6 @@ type Props = {
   isLoading?: boolean;
 };
 
-// Компонент одиночного todo. Підтримує перегляд, редагування, видалення та індикатор завантаження.
-// Важливі колбеки: `onDelete`, `onToggle`, `onUpdateTitle` — викликаються для взаємодії з сервером/батьківським станом.
 export const TodoItem: React.FC<Props> = ({
   todo,
   onDelete,
@@ -23,7 +21,6 @@ export const TodoItem: React.FC<Props> = ({
   const [title, setTitle] = useState(todo.title);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Відкрити інпут для редагування при подвійному кліку
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
@@ -32,9 +29,6 @@ export const TodoItem: React.FC<Props> = ({
     setTitle(e.target.value);
   };
 
-  // Обробник завершення редагування (blur / submit)
-  // Якщо заголовок непорожній і змінився — викликає `onUpdateTitle`.
-  // Якщо після обрізки заголовок став порожнім — викликає `onDelete`.
   const handleBlur = () => {
     const trimmed = title.trim();
 
@@ -42,12 +36,10 @@ export const TodoItem: React.FC<Props> = ({
       setIsSaving(true);
       setTitle(trimmed);
       onUpdateTitle(todo.id, trimmed);
-      // setIsEditing will be cleared when parent updates todo.title
 
       return;
     }
 
-    // If title became empty -> delete the todo
     if (!trimmed) {
       onDelete(todo.id);
 
@@ -65,8 +57,6 @@ export const TodoItem: React.FC<Props> = ({
     }
   }, [todo.title, isSaving, title]);
 
-  // Обробник клавіш всередині інпута редагування.
-  // Escape — скасовує редагування і відновлює початковий заголовок.
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       setIsEditing(false);
